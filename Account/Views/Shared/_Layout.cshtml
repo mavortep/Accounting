@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+
+    @Scripts.Render("~/bundles/modernizr")
+    @Styles.Render("~/Content/css")
+    @RenderSection("scriptslib", required: false)
+    @RenderSection("csslib", required: false)
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link rel="icon" href="~/Resources/list.png">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <a class="navbar-brand" href='@Url.Action("Index", "Home")'> Application</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation" style="">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarColor01">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href='@Url.Action("Index", "Home")'>Home<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href='@Url.Action("Index", "Spendings")'>Spendings</a>
+                </li>
+            </ul>
+
+
+            @if (Request.IsAuthenticated)
+            {
+                using (Html.BeginForm("Logout", "User", FormMethod.Post, new { id = "logoutForm" }))
+                {
+                    <a type="button" class="btn btn-secondary my-2 my-sm-0" href="javascript:document.getElementById('logoutForm').submit()">LogOut</a>
+                }
+            }
+            else
+            {
+                <input type="button" class="btn btn-info my-2 my-sm-0" onclick="location.href='@Url.Action("Login", "User")';" value="Login" />
+            }
+
+        </div>
+    </nav>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year – приложение ASP.NET</p>
+            <p>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></p>
+
+        </footer>
+    </div>
+
+    <div class="loaderbody" id="loaderbody">
+        <div class="loader"></div>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+    <script src="~/Scripts/CRUDScript.js"></script>
+    <script src="~/Scripts/notify.min.js"></script>
+
+    @*<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>*@
+</body>
+</html>

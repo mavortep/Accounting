@@ -1,0 +1,71 @@
+﻿@model Account.Models.Spendings
+
+@{
+    ViewBag.Title = "AddOrEdit";
+    Layout = null;
+}
+
+@using (Html.BeginForm("AddOrEdit", "Spendings", FormMethod.Post, new { enctype = "multipart/form-data", onSubmit = "return AccountPost(this);", data_resetUrl = Url.Action("AddOrEdit", "Spendings", new { id = 0})}))
+{
+    @Html.AntiForgeryToken()
+<div class="row">
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.ItemID)
+        @Html.HiddenFor(model => model.ImagePath)
+
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Jug, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Jug, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Jug, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Date, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Date, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Save" class="btn btn-default" />
+                    @if (Model.ItemID != 0)
+                    {
+                    <a class="btn btn-success" onclick="refreshAddNewTab('@Url.Action("AddOrEdit", "Spendings", new { id = 0})', false)"><i class="fa fa-plus"></i> Add New</a>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                @*@Html.LabelFor(model => model.ImagePath, htmlAttributes: new { @class = "control-label col-md-2" })*@
+                <div class="col-md-10">
+                    <img src="@Url.Content(Model.ImagePath)" style="margin-left: 350px" height="200" width="200" id="imagePreview" />
+                    <input type="file" class="form-control-file" name="ImageUpload" aria-describedby="fileHelp" id="exampleInputFile" style="margin-top: 20px; margin-left: 350px" accept="image/jpeg, image/png" onchange="ShowImagePreview(this, document.getElementById('imagePreview'))" />
+                    @*<small id="fileHelp" style="margin-left: 350px" class="form-text text-muted">This is some placeholder block-level help text for the above input. It's a bit lighter and easily wraps to a new line.</small>*@
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+}
